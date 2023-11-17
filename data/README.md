@@ -58,9 +58,9 @@ samtools faidx 21.region.fa
 
 # Simulate reads
 mkdir illumina
-iss generate --genomes 21.region.fa --model hiseq --n_reads 1000 --cpus 4 --output illumina/reads
+iss generate --seed $SEED --genomes 21.region.fa --model hiseq --n_reads 1000 --cpus 4 --output illumina/reads
 mkdir ONT
-pbsim --strategy wgs --prefix ONT/reads --method errhmm --errhmm ../pbsim3-model/ERRHMM-ONT.model --depth 3 --seed 23 --genome 21.region.fa
+pbsim --strategy wgs --prefix ONT/reads --method errhmm --errhmm ../pbsim3-model/ERRHMM-ONT.model --depth 3 --seed $SEED --genome 21.region.fa
 
 cd ..
 ```
