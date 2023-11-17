@@ -44,6 +44,8 @@ bcftools view -Oz -S samples.list ../21.vcf.gz $region > 21.region.vcf.gz
 tabix -p vcf 21.region.vcf.gz
 
 # Construct the graph for the region of interest
+# adapted from https://github.com/vgteam/vg/issues/3668
+# some more info at https://github.com/vgteam/vg/issues/3599#issuecomment-1066911977
 vg construct -r ../21.fa -v 21.region.vcf.gz -R $region --alt-paths > graph.vg
 # Get the haplotypes and store them in a gbwt and gbwtgrapg
 vg gbwt --discard-overlaps -v 21.region.vcf.gz -x graph.vg -g graph.gbwtgraph -o graph.gbwt
