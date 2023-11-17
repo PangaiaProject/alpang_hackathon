@@ -1,24 +1,8 @@
 # ALPACA/PANGAIA ANNUAL WORKSHOP - Hackathon
 
-### What we need to do
-* presentation on snakemake
-* slide with task (see next section)
-* prepare testing data
-* groups
-
-### Goal (what they have to do)
-* snakemake pipeline to evaluate aligner: efficiency/accuracy + parameter testing
-    * https://github.com/vgteam/vg/wiki/Mapping-short-reads-with-Giraffe#evaluating-with-vg-stats
-* questions to answer (by skimming the readme/paper or running the tool):
-    * I/O?
-    * cyclic/acylic?
-    * directed/undirected?
-    * path/nonpath?
-    * short/long reads?
-    * paired-end?
+Produce a snakemake pipeline to evaluate graph aligners (efficiency/accuracy + parameters testing).
 
 ### Aligners
-(presi dalla review di BIBM)
 - **VG**
     - https://github.com/vgteam/vg
     - map: https://www.nature.com/articles/nbt.4227#Abs2
@@ -48,15 +32,12 @@
 - SeGram
     - https://github.com/CMU-SAFARI/SeGraM
     - https://people.inf.ethz.ch/omutlu/pub/SeGraM_genomic-sequence-mapping-universal-accelerator_isca22.pdf
-
-(aggiunte)
-
 - **GraphChainer**
     - https://github.com/algbio/GraphChainer
     - https://academic.oup.com/bioinformatics/article/39/8/btad460/7231478
 - **minichain**
     - https://github.com/at-cg/minichain
     - https://link.springer.com/chapter/10.1007/978-3-031-29119-7_4
-- PanAligner
+- **PanAligner**
     - https://github.com/at-cg/PanAligner
     - https://www.biorxiv.org/content/10.1101/2023.06.21.545871v1.abstract
