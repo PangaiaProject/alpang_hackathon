@@ -75,5 +75,5 @@ Some potential regions of interest:
 ### Interesting things to do
 - [ ] Simulate from a haplotype not in the graph
 - [ ] Simulate PacBio CLR and CSS
-- [ ] Build/use more complex graphs (e.g., pggb on HLA)
+- [ ] Build/use more complex graphs (e.g., pggb on .msa)
 - [ ] Use data from [HPRG](https://github.com/human-pangenomics/hpp_pangenome_resources)
