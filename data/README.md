@@ -79,3 +79,4 @@ Some potential regions of interest:
 - [ ] Simulate PacBio CLR and CSS
 - [ ] Build/use more complex graphs (e.g., pggb on .msa)
 - [ ] Use data from [HPRG](https://github.com/human-pangenomics/hpp_pangenome_resources)
+- [ ] How to evaluate alignments?
