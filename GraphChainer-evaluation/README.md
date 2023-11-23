@@ -30,3 +30,12 @@ source install_grapphchainer.sh
 ```
 
 Creates `GraphChainer` conda environment, which is then used in the Snakemake pipeline.
+
+## Run the pipeline
+
+```bash
+# mamba install -c bioconda snakemake # if snakemake is not installed
+cd workflow
+snakemake --configfile config.yaml -j20 --use-conda all 
+```
+

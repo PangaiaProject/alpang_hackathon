@@ -33,6 +33,7 @@ param_combinations = list(itertools.product(
 param_specifif_tuples = config["parameters_tuples"]
 # unified parameters
 param_tuples = list(set(tuple(x) for x in param_combinations + param_specifif_tuples))
+output_dir = config.get("output_directory", "output")
 
 
 rule graphchainer:
@@ -40,7 +41,7 @@ rule graphchainer:
         reads=lambda wildcards: reads_by_id[wildcards.reads_id],
         graph=lambda wildcards: graph_by_id[wildcards.graph_id]
     output:
-        "{graph_id}_{reads_id}_{ss}_{csl}_{cg}.gam"
+        "{output_dir}/{graph_id}_{reads_id}_{ss}_{csl}_{cg}.gam"
     conda: "GraphChainer"
     params:
         sampling_step=lambda wildcards: wildcards.ss,
@@ -55,7 +56,7 @@ rule graphchainer:
             -f {{input.reads}} -g {{input.graph}} -a {{output}}"
 
 rule all_graphchainer_targets:
-    input: [f"{graph_id}_{reads_id}_{ss}_{csl}_{cg}.gam" for graph_id in graph_by_id.keys() for reads_id in reads_by_id.keys() for ss, csl, cg in param_tuples]
+    input: [f"{output_dir}/{graph_id}_{reads_id}_{ss}_{csl}_{cg}.gam" for graph_id in graph_by_id.keys() for reads_id in reads_by_id.keys() for ss, csl, cg in param_tuples]
 
 rule all:
     input:

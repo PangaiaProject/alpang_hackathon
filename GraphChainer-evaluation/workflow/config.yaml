@@ -1,20 +1,22 @@
 graph_table: graph_table.tsv # VG or GFA format
 reads_table: reads_table.tsv # FASTA, FASTA.GZ, FASTQ, FASTQ.GZ
-output_directory: "results"
+output_directory: "../results"
 graphchainer_threads: 4
-parameters_product:
+
+parameters_product: # each combination of parameters will be tried out (leave at least one array empty to deactivate)
   # Sampling step factor (default 1).
   # Use >1 (<1, >0) for faster (slower), but less (more) accurate alignments.
   # It increases (decreases) the sampling sparsity of fragments.
-  sampling_step: [1, 0.5, 2]
+  # !! Appparently only supports integer values?!!
+  sampling_step: [1, 2, 3, 5]
   # The length of the fragments in which the long read is split to create anchors (default 35).
   colinear_split_len: [35, 20, 70]
   # When converting an optimal chain of anchors into an alignment path,
   # split the path if the distance in the graph between consecutive anchors is greater than this value (default 10000).
   colinear_gap: [10000, 5000, 20000]
-parameters_tuples:
+parameters_tuples: # each tuple will tried out
   # sampling_step, colinear_split_len, colinear_gap
   - [1, 35, 10000]
-  - [2, 35, 10000]
-  - [0.5, 35, 10000]
-  - [0.2, 35, 10000]
+#  - [2, 35, 10000]
+#  - [0.5, 35, 10000]
+#  - [0.3, 35, 10000]
