@@ -1,10 +1,10 @@
-## How to start minimal example
+## How to run
 
 ```bash
-snakemake -j4 --use-conda
+snakemake --configfile config.yaml --use-conda all
 ```
 
-## How to visulise the results
+## How to visualise the results
 
 ```bash
 vg view output.gam
