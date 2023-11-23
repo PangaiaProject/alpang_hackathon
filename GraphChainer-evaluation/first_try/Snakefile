@@ -1,0 +1,26 @@
+# our goal is to run GraphChainer on at least something
+
+GRAPHCHAINER="../GraphChainer/bin/GraphChainer"
+
+reads = "../../data/21:14459766-14464736/ONT/reads_0001.fastq"
+graph = "../../data/21:14459766-14464736/graph.vg"
+
+rule graphchainer:
+    input:
+        reads=reads,
+        graph=graph
+    output:
+        "output.gam"
+    conda: "GraphChainer"
+    threads: 4
+    shell:
+        f"{GRAPHCHAINER} -t {{threads}} -f {{input.reads}} -g {{input.graph}} -a {{output}}"
+
+rule visualize_gam:
+    input:
+        gam="{sample}.gam",
+        graph=graph
+    output:
+        "{sample}.svg"
+    shell:
+        """vg view -d {input.graph} -A {input.gam} | dot -Tsvg -o {output}"""
