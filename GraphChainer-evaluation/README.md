@@ -1,6 +1,6 @@
 # GraphChainer evaluation
 
-## Basic information
+## Basic information about GraphChainer
 
 - I/O seems standard enough
   - Input:
@@ -14,4 +14,19 @@
 - "is it for short/long reads? Paired-end or single-end?"
   - long single reads, apparently high error rate is OK
 
-  
+## Additional notes
+
+- on parameters:
+  - `--sampling-step` controls the trade-off between precision and speed
+  - `--colinear-split-len` controls the anchor size, in which an input long read is split into
+    - so, longer splits give better specificity, but lower sensitivity
+  - `--colinear-split-gap` is dependent on `--colinear-split-len`, so it can be **ignored** for now
+  - `--colinear-gap` controls whether to split long alignments into shorter ones, if adjacent anchors are too far
+
+## Install the tool
+
+```bash
+source install_grapphchainer.sh
+```
+
+Creates `GraphChainer` conda environment, which is then used in the Snakemake pipeline.
