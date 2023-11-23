@@ -12,9 +12,19 @@ rule graphchainer:
     output:
         "output.gam"
     conda: "GraphChainer"
+    params:
+        sampling_step=1,
+        colinear_split_len=35,
+        colinear_split_gap=35,
+        colinear_gap=10_000
     threads: 4
     shell:
-        f"{GRAPHCHAINER} -t {{threads}} -f {{input.reads}} -g {{input.graph}} -a {{output}}"
+        f"{GRAPHCHAINER} -t {{threads}}\
+            --sampling-step {{params.sampling_step}}\
+            --colinear-split-len {{params.colinear_split_len}}\
+            --colinear-split-gap {{params.colinear_split_gap}}\
+            --colinear-gap {{params.colinear_gap}}\
+            -f {{input.reads}} -g {{input.graph}} -a {{output}}"
 
 rule visualize_gam:
     input:
