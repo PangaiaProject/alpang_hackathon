@@ -1,0 +1,75 @@
+import pandas as pd
+import itertools
+
+GRAPHCHAINER="../GraphChainer/bin/GraphChainer"
+
+# load reads filenames to `reads_by_id`
+with open(config["reads_table"]) as f:
+    header = f.readline().strip().split("\t")
+    id_col = header.index("reads_id")
+    fname_col = header.index("reads_filename")
+    reads_by_id = {}
+    for line in f:
+        row = line.strip().split("\t")
+        reads_by_id[row[id_col]] = row[fname_col]
+
+# load graph filenames to `graph_by_id`
+with open(config["graph_table"]) as f:
+    header = f.readline().strip().split("\t")
+    id_col = header.index("graph_id")
+    fname_col = header.index("graph_filename")
+    graph_by_id = {}
+    for line in f:
+        row = line.strip().split("\t")
+        graph_by_id[row[id_col]] = row[fname_col]
+
+# create parameter settings from combinations
+param_combinations = list(itertools.product(
+    config["parameters_product"]["sampling_step"],
+    config["parameters_product"]["colinear_split_len"],
+    config["parameters_product"]["colinear_gap"]
+))
+# load parameter from specific tuples
+param_specifif_tuples = config["parameters_tuples"]
+# unified parameters
+param_tuples = list(set(tuple(x) for x in param_combinations + param_specifif_tuples))
+output_dir = config.get("output_directory", "output")
+
+
+rule graphchainer:
+    input:
+        reads=lambda wildcards: reads_by_id[wildcards.reads_id],
+        graph=lambda wildcards: graph_by_id[wildcards.graph_id]
+    output:
+        "{output_dir}/{graph_id}_{reads_id}_{ss}_{csl}_{cg}.gam"
+    conda: "GraphChainer"
+    params:
+        sampling_step=lambda wildcards: wildcards.ss,
+        colinear_split_len=lambda wildcards: wildcards.csl,
+        colinear_gap=lambda wildcards: wildcards.cg
+    threads: config.get("graphchainer_threads", 4)
+    shell:
+        f"{GRAPHCHAINER} -t {{threads}} \
+            --sampling-step {{params.sampling_step}} \
+            --colinear-split-len {{params.colinear_split_len}} \
+            --colinear-gap {{params.colinear_gap}} \
+            -f {{input.reads}} -g {{input.graph}} -a {{output}}"
+
+rule all_graphchainer_targets:
+    input: [f"{output_dir}/{graph_id}_{reads_id}_{ss}_{csl}_{cg}.gam" for graph_id in graph_by_id.keys() for reads_id in reads_by_id.keys() for ss, csl, cg in param_tuples]
+
+rule all:
+    input:
+        rules.all_graphchainer_targets.input
+
+
+
+#
+# rule visualize_gam:
+#     input:
+#         gam="{graph_id}_{reads_id}_{ss}_{csl}_{cg}.gam",
+#         graph=graph_by_id["{graph_id}"]
+#     output:
+#         "{graph_id}_{reads_id}_{ss}_{csl}_{cg}.svg"
+#     shell:
+#         """vg view -d {input.graph} -A {input.gam} | dot -Tsvg -o {output}"""
