@@ -1,0 +1,27 @@
+from os.path import join as pjoin
+
+
+configfile: "../config/config.yaml"
+
+GFA= config["gfa"]
+SOFTWARE_DIR= config["software"]
+
+ILLUMINA_DIR= config["illumina"]["dir"]
+ILLUMINA_ODIR= config["illumina"]["outdir"]
+ONT_DIR= config["ont"]["dir"]
+ONT_ODIR= config["ont"]["outdir"]
+
+##### include rules #####
+include: "rules/bio.smk"
+include: "rules/minigraph.smk"
+include: "rules/graphchainer.smk"
+
+
+
+##### target rules #####
+rule all:
+    input:
+        expand(pjoin(ILLUMINA_ODIR, "minigraph", "{sample}.gaf"), sample=config["illumina"]["samples"]),
+        expand(pjoin(ONT_ODIR, "minigraph", "{sample}.gaf"), sample=config["ont"]["samples"]),
+        expand(pjoin(ILLUMINA_ODIR, "graphchainer", "{sample}.gam"), sample=config["illumina"]["samples"]),
+        expand(pjoin(ONT_ODIR, "graphchainer", "{sample}.gam"), sample=config["ont"]["samples"]),
