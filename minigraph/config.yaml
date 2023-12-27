@@ -1,7 +1,0 @@
-graph: "data/21:14459766-14464736/graph.wP.unchopped.gfa"
-
-sr_fastq_prefix: "data/21:14459766-14464736/illumina"
-
-lr_fastq: "data/21:14459766-14464736/ONT/reads_0001.fastq"
-
-threads: 1
