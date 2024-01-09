@@ -18,7 +18,7 @@ rule minigraph_illumina:
     benchmark:
         pjoin(ILLUMINA_ODIR, "minigraph", "{sample}.benchmark.txt")
     log:
-        pjoin(ONT_ODIR, "minigraph", "{sample}.log.txt")
+        pjoin(ILLUMINA_ODIR, "minigraph", "{sample}.log.txt")
     threads: workflow.cores
     shell:
         """
