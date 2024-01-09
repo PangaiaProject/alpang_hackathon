@@ -30,7 +30,7 @@ rule graphchainer_illumina:
     benchmark:
         pjoin(ILLUMINA_ODIR, "graphchainer", "{sample}.benchmark.txt")
     log:
-        pjoin(ONT_ODIR, "graphchainer", "{sample}.log.txt")
+        pjoin(ILLUMINA_ODIR, "graphchainer", "{sample}.log.txt")
     conda:
         "../envs/graphchainer.yaml"
     params:
