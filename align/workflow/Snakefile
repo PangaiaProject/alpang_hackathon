@@ -15,6 +15,7 @@ ONT_ODIR= config["ont"]["outdir"]
 include: "rules/bio.smk"
 include: "rules/minigraph.smk"
 include: "rules/graphchainer.smk"
+include: "rules/minichain.smk"
 
 
 
@@ -25,3 +26,5 @@ rule all:
         expand(pjoin(ONT_ODIR, "minigraph", "{sample}.gaf"), sample=config["ont"]["samples"]),
         expand(pjoin(ILLUMINA_ODIR, "graphchainer", "{sample}.gam"), sample=config["illumina"]["samples"]),
         expand(pjoin(ONT_ODIR, "graphchainer", "{sample}.gam"), sample=config["ont"]["samples"]),
+        expand(pjoin(ILLUMINA_ODIR, "minichain", "{sample}.gaf"), sample=config["illumina"]["samples"]),
+        expand(pjoin(ONT_ODIR, "minichain", "{sample}.gaf"), sample=config["ont"]["samples"]),
