@@ -1,0 +1,9 @@
+name: Astarix2
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+ 
+  - argp-standalone
+  - clang
