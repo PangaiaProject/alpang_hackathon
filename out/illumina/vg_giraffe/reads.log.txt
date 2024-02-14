@@ -1,7 +1,0 @@
-warning[vg::giraffe]: Finalizing fragment length distribution before reaching maximum sample size
-                      mapped 132 reads single ended with 368 pairs of reads left unmapped
-                      mean: 0, stdev: 1
-warning[vg::giraffe]: Cannot cluster reads with a fragment distance smaller than read distance
-                      Fragment length distribution: mean=0, stdev=1
-                      Fragment distance limit: 2, read distance limit: 200
-warning[vg::giraffe]: Falling back on single-end mapping
