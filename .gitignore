@@ -1,3 +1,4 @@
 .snakemake
 align/software
 align/out
+out
