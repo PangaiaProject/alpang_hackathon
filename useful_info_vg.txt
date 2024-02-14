@@ -1,0 +1,8 @@
+MAPPING SHORT READS WITH GIRAFFE
+https://github.com/vgteam/vg/wiki/Mapping-short-reads-with-Giraffe
+
+GIRAFFE BEST PRACTICES
+https://github.com/vgteam/vg/wiki/Giraffe-best-practices
+
+MAPPING WITH VG MAP
+https://github.com/vgteam/vg?tab=readme-ov-file#mapping

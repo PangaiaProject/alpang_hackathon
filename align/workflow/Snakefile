@@ -1,11 +1,12 @@
 from os.path import join as pjoin
 
 
-configfile: "../config/config.yaml"
+configfile: "config/config.yaml"
 
 GFA= config["gfa"]
 SOFTWARE_DIR= config["software"]
 
+GRAPH_DIR= config["graph_files"]
 ILLUMINA_DIR= config["illumina"]["dir"]
 ILLUMINA_ODIR= config["illumina"]["outdir"]
 ONT_DIR= config["ont"]["dir"]
@@ -16,15 +17,19 @@ include: "rules/bio.smk"
 include: "rules/minigraph.smk"
 include: "rules/graphchainer.smk"
 include: "rules/minichain.smk"
+include: "rules/vg_giraffe.smk"
+include: "rules/vg_map.smk"
 
 
 
 ##### target rules #####
 rule all:
     input:
-        expand(pjoin(ILLUMINA_ODIR, "minigraph", "{sample}.gaf"), sample=config["illumina"]["samples"]),
-        expand(pjoin(ONT_ODIR, "minigraph", "{sample}.gaf"), sample=config["ont"]["samples"]),
-        expand(pjoin(ILLUMINA_ODIR, "graphchainer", "{sample}.gam"), sample=config["illumina"]["samples"]),
-        expand(pjoin(ONT_ODIR, "graphchainer", "{sample}.gam"), sample=config["ont"]["samples"]),
-        expand(pjoin(ILLUMINA_ODIR, "minichain", "{sample}.gaf"), sample=config["illumina"]["samples"]),
-        expand(pjoin(ONT_ODIR, "minichain", "{sample}.gaf"), sample=config["ont"]["samples"]),
+        #expand(pjoin(ILLUMINA_ODIR, "minigraph", "{sample}.gaf"), sample=config["illumina"]["samples"]),
+        #expand(pjoin(ONT_ODIR, "minigraph", "{sample}.gaf"), sample=config["ont"]["samples"]),
+        #expand(pjoin(ILLUMINA_ODIR, "graphchainer", "{sample}.gam"), sample=config["illumina"]["samples"]),
+        #expand(pjoin(ONT_ODIR, "graphchainer", "{sample}.gam"), sample=config["ont"]["samples"]),
+        #expand(pjoin(ILLUMINA_ODIR, "minichain", "{sample}.gaf"), sample=config["illumina"]["samples"]),
+        #expand(pjoin(ONT_ODIR, "minichain", "{sample}.gaf"), sample=config["ont"]["samples"]),
+        expand(pjoin(ILLUMINA_ODIR, "vg_giraffe", "{sample}.gaf"), sample=config["illumina"]["samples"]),
+        expand(pjoin(ILLUMINA_ODIR, "vg_map", "{sample}.gaf"), sample=config["illumina"]["samples"]),
