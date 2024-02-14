@@ -1,29 +1,29 @@
 # --- vg-map pipeline
-# --- AUTHOR: Francesco Andreace
+# --- Author: Francesco Andreace
 
 rule index_graph_vg_map:
     input:
         graph = GFA
     output:
-        gcsa = pjoin(GRAPH_DIR, "vg_map", "graph.gcsa"),
-        lpc = pjoin(GRAPH_DIR, "vg_map", "graph.gcsa.lcp"),
-        xg = pjoin(GRAPH_DIR, "vg_map", "graph.xg"),
+        gcsa =  temp(pjoin(ILLUMINA_ODIR, "vg_map", "graph.gcsa")),
+        lpc =  temp(pjoin(ILLUMINA_ODIR, "vg_map", "graph.gcsa.lcp")),
+        xg =  temp(pjoin(ILLUMINA_ODIR, "vg_map", "graph.xg")),
     conda:
         "../envs/vg.yaml"
     benchmark:
-        pjoin(GRAPH_DIR, "vg_map", "graph_building.benchmark.txt")
+        pjoin(ILLUMINA_ODIR, "vg_map", "graph_building.benchmark.txt")
     log:
-        pjoin(GRAPH_DIR, "vg_map", "graph_building.log.txt")
+        pjoin(ILLUMINA_ODIR, "vg_map", "graph_building.log.txt")
     threads: workflow.cores
     shell:"""
-    vg autoindex --workflow map -t {threads} -p {GRAPH_DIR}/vg_map/graph -g {input.graph}
+    vg autoindex --workflow map -t {threads} -p {ILLUMINA_ODIR}/vg_map/graph -g {input.graph}
     """
 
 rule vg_map_illumina:
     input:
-        gcsa = pjoin(GRAPH_DIR, "vg_map", "graph.gcsa"),
-        lpc = pjoin(GRAPH_DIR, "vg_map", "graph.gcsa.lcp"),
-        xg = pjoin(GRAPH_DIR, "vg_map", "graph.xg"),
+        gcsa = pjoin(ILLUMINA_ODIR, "vg_map", "graph.gcsa"),
+        lpc = pjoin(ILLUMINA_ODIR, "vg_map", "graph.gcsa.lcp"),
+        xg = pjoin(ILLUMINA_ODIR, "vg_map", "graph.xg"),
         fq_1 = pjoin(ILLUMINA_DIR, "{sample}_R1.fastq"),
         fq_2 = pjoin(ILLUMINA_DIR, "{sample}_R2.fastq"),
     output:

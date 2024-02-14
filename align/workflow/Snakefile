@@ -1,12 +1,11 @@
 from os.path import join as pjoin
 
 
-configfile: "../config/config.yaml"
+configfile: "config/config.yaml"
 
 GFA= config["gfa"]
 SOFTWARE_DIR= config["software"]
 
-GRAPH_DIR= config["graph_files"]
 ILLUMINA_DIR= config["illumina"]["dir"]
 ILLUMINA_ODIR= config["illumina"]["outdir"]
 ONT_DIR= config["ont"]["dir"]

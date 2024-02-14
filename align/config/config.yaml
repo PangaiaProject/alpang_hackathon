@@ -13,3 +13,5 @@ ont:
   dir: "../data/21:14459766-14464736/ONT"
   outdir: "../out/ONT"
 
+vg_giraffe:
+  m_frag_len: 500
