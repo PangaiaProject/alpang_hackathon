@@ -1,14 +1,17 @@
-gfa: "/home/ciccolella/alpang_hackathon/data/21:14459766-14464736/graph.wP.unchopped.gfa"
+gfa: "../data/21:14459766-14464736/graph.wP.unchopped.gfa"
+graph_files: "../data/21:14459766-14464736"
 
 software: "../software"
 
 illumina:
   samples: ["reads"]
-  dir: "/home/ciccolella/alpang_hackathon/data/21:14459766-14464736/illumina"
+  dir: "../data/21:14459766-14464736/illumina"
   outdir: "../out/illumina"
 
 ont:
   samples: ["reads_0001"]
-  dir: "/home/ciccolella/alpang_hackathon/data/21:14459766-14464736/ONT"
+  dir: "../data/21:14459766-14464736/ONT"
   outdir: "../out/ONT"
 
+vg_giraffe:
+  m_frag_len: 500
