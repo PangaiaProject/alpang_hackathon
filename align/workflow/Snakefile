@@ -24,14 +24,14 @@ include: "rules/graphaligner.smk"
 ##### target rules #####
 rule all:
     input:
-        expand(pjoin(ILLUMINA_ODIR, "minigraph", "{sample}.gaf"), sample=config["illumina"]["samples"]),
-        expand(pjoin(ONT_ODIR, "minigraph", "{sample}.gaf"), sample=config["ont"]["samples"]),
-        expand(pjoin(ILLUMINA_ODIR, "graphchainer", "{sample}.gam"), sample=config["illumina"]["samples"]),
-        expand(pjoin(ONT_ODIR, "graphchainer", "{sample}.gam"), sample=config["ont"]["samples"]),
-        expand(pjoin(ILLUMINA_ODIR, "minichain", "{sample}.gaf"), sample=config["illumina"]["samples"]),
-        expand(pjoin(ONT_ODIR, "minichain", "{sample}.gaf"), sample=config["ont"]["samples"]),
-        expand(pjoin(ILLUMINA_ODIR, "vg_giraffe", "{sample}.gaf"), sample=config["illumina"]["samples"]),
-        expand(pjoin(ILLUMINA_ODIR, "vg_map", "{sample}.gaf"), sample=config["illumina"]["samples"]),
-        expand(pjoin(ILLUMINA_ODIR, "graph_aligner", "{sample}.gam"), sample=config["illumina"]["samples"]),
-        expand(pjoin(ONT_ODIR, "graph_aligner", "{sample}.gam"), sample=config["ont"]["samples"]),
+        # expand(pjoin(ILLUMINA_ODIR, "minigraph", "{sample}.gaf"), sample=config["illumina"]["samples"]),
+        # expand(pjoin(ONT_ODIR, "minigraph", "{sample}.gaf"), sample=config["ont"]["samples"]),
+        # expand(pjoin(ILLUMINA_ODIR, "graphchainer", "{sample}.gam"), sample=config["illumina"]["samples"]),
+        # expand(pjoin(ONT_ODIR, "graphchainer", "{sample}.gam"), sample=config["ont"]["samples"]),
+        # expand(pjoin(ILLUMINA_ODIR, "minichain", "{sample}.gaf"), sample=config["illumina"]["samples"]),
+        # expand(pjoin(ONT_ODIR, "minichain", "{sample}.gaf"), sample=config["ont"]["samples"]),
+        # expand(pjoin(ILLUMINA_ODIR, "vg_giraffe", "{sample}.gaf"), sample=config["illumina"]["samples"]),
+        # expand(pjoin(ILLUMINA_ODIR, "vg_map", "{sample}.gaf"), sample=config["illumina"]["samples"]),
+        expand(pjoin(ILLUMINA_ODIR, "graph_aligner", "{sample}.gaf"), sample=config["illumina"]["samples"]),
+        expand(pjoin(ONT_ODIR, "graph_aligner", "{sample}.gaf"), sample=config["ont"]["samples"]),
         
