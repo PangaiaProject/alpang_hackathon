@@ -18,7 +18,7 @@ include: "rules/graphchainer.smk"
 include: "rules/minichain.smk"
 include: "rules/vg_giraffe.smk"
 include: "rules/vg_map.smk"
-
+include: "rules/graphaligner.smk"
 
 
 ##### target rules #####
@@ -32,3 +32,6 @@ rule all:
         expand(pjoin(ONT_ODIR, "minichain", "{sample}.gaf"), sample=config["ont"]["samples"]),
         expand(pjoin(ILLUMINA_ODIR, "vg_giraffe", "{sample}.gaf"), sample=config["illumina"]["samples"]),
         expand(pjoin(ILLUMINA_ODIR, "vg_map", "{sample}.gaf"), sample=config["illumina"]["samples"]),
+        expand(pjoin(ILLUMINA_ODIR, "graph_aligner", "{sample}.gam"), sample=config["illumina"]["samples"]),
+        expand(pjoin(ONT_ODIR, "graph_aligner", "{sample}.gam"), sample=config["ont"]["samples"]),
+        
