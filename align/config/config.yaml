@@ -15,3 +15,6 @@ ont:
 
 vg_giraffe:
   m_frag_len: 500
+
+threads:
+  16
