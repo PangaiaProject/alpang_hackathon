@@ -1,12 +1,10 @@
-# --- Graphchainer pipeline
+# --- PanAligner pipeline
 # Co-Authored by:
 # - Alessia Petescia
 # - Jorge Avila Cartes
 
 from pathlib import Path 
 Path(SOFTWARE_DIR).mkdir(parents=True, exist_ok=True)
-
-THREADS = config["threads"]
 
 rule panaligner_install:
     params:
@@ -30,7 +28,7 @@ rule panaligner_ont:
     output:
         gaf= pjoin(ONT_ODIR, "panaligner", "{sample}.gaf")
     threads:
-        THREADS
+        workflow.cores
     shell:
         "{input.tool} -cx lr {input.gfa} {input.reads} > {output.gaf}"
 
@@ -42,6 +40,6 @@ rule panaligner_illumina:
     output:
         gaf= pjoin(ILLUMINA_ODIR, "panaligner", "{sample}.gaf")
     threads:
-        THREADS
+        workflow.cores
     shell:
         "{input.tool} -cx sr {input.gfa} {input.reads} > {output.gaf}"
