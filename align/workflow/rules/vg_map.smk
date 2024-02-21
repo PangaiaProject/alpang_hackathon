@@ -35,6 +35,7 @@ rule vg_map_illumina:
     log:
         pjoin(ILLUMINA_ODIR, "vg_map", "{sample}.log.txt")
     threads: workflow.cores
-    shell:"""
+    shell:
+    """
     vg map -t {threads} -x {input.xg} -g {input.gcsa} -f {input.fq_1} -f {input.fq_2} --gaf > {output.gaf} 2> {log}
     """

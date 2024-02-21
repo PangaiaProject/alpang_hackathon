@@ -3,9 +3,6 @@
 # - Jorge Avila Cartes
 # - Khodor Hanush
 
-from pathlib import Path
-from os.path import join as pjoin
-
 THREADS = config["threads"]["graph_aligner"]
 
 rule graph_aligner_illumina:
@@ -33,4 +30,6 @@ rule graph_aligner_ont:
     conda:
         "../envs/graphaligner.yaml"
     shell:
-        "GraphAligner -g {input.graph} -f {input.reads} -x vg -a {output.gaf} -t {threads}"
+        """
+        GraphAligner -g {input.graph} -f {input.reads} -x vg -a {output.gaf} -t {threads}
+        """
