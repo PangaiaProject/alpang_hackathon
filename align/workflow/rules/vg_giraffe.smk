@@ -16,9 +16,9 @@ rule index_graph_vg_giraffe:
         pjoin(ILLUMINA_ODIR, "vg_giraffe", "graph_building.log.txt"),
     threads: workflow.cores
     shell:
-    """
-    vg autoindex --workflow giraffe -t {threads} -p {ILLUMINA_ODIR}/vg_giraffe/graph -g {input.graph}
-    """
+        """
+        vg autoindex --workflow giraffe -t {threads} -p {ILLUMINA_ODIR}/vg_giraffe/graph -g {input.graph}
+        """
 
 rule vg_giraffe_illumina:
     input:
@@ -39,8 +39,8 @@ rule vg_giraffe_illumina:
     params:
         max_frag_len = config["vg_giraffe"]["m_frag_len"]
     shell:    
-    """
-    vg giraffe -t {threads} --max-fragment-length {params.max_frag_len} -Z {input.gbz} -m {input.minimizers} -d {input.dist} -f {input.fq_1} -f {input.fq_2} -o gaf > {output.gaf} 2> {log}
-    """
+        """
+        vg giraffe -t {threads} --max-fragment-length {params.max_frag_len} -Z {input.gbz} -m {input.minimizers} -d {input.dist} -f {input.fq_1} -f {input.fq_2} -o gaf > {output.gaf} 2> {log}
+        """
 
 

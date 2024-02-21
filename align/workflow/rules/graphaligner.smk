@@ -3,8 +3,6 @@
 # - Jorge Avila Cartes
 # - Khodor Hanush
 
-THREADS = config["threads"]["graph_aligner"]
-
 rule graph_aligner_illumina:
     input:
         graph=GFA,#pjoin( ILLUMINA_DIR, "{gfa}.gfa"),
@@ -17,7 +15,9 @@ rule graph_aligner_illumina:
     conda:
         "../envs/graphaligner.yaml"
     shell:
-        "GraphAligner -g {input.graph} -f {input.reads1} {input.reads2} -x vg -a {output.gaf} -t {threads}"
+        """
+        GraphAligner -g {input.graph} -f {input.reads1} {input.reads2} -x vg -a {output.gaf} -t {threads}
+        """
 
 rule graph_aligner_ont:
     input:
