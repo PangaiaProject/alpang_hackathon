@@ -29,9 +29,13 @@ rule panaligner_ont:
         gaf= pjoin(ONT_ODIR, "panaligner", "{sample}.gaf")
     threads:
         workflow.cores
+    conda:
+        "../envs/panaligner.yaml"
+    log:
+        pjoin(ONT_ODIR, "panaligner", "{sample}.log.txt")
     shell:
         """
-        {input.tool} -cx lr {input.graph} {input.reads} > {output.gaf}
+        {input.tool} -cx lr {input.graph} {input.reads} > {output.gaf} 2> {log}
         """
 
 rule panaligner_illumina:
@@ -43,7 +47,11 @@ rule panaligner_illumina:
         gaf= pjoin(ILLUMINA_ODIR, "panaligner", "{sample}.gaf")
     threads:
         workflow.cores
+    conda:
+        "../envs/panaligner.yaml"
+    log:
+        pjoin(ILLUMINA_ODIR, "panaligner", "{sample}.log.txt")
     shell:
         """
-        {input.tool} -cx sr {input.graph} {input.reads} > {output.gaf}
+        {input.tool} -cx sr {input.graph} {input.reads} > {output.gaf} 2> {log}
         """

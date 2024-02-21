@@ -5,13 +5,15 @@
 
 rule graph_aligner_illumina:
     input:
-        graph=GFA,#pjoin( ILLUMINA_DIR, "{gfa}.gfa"),
-        reads1=pjoin( ILLUMINA_DIR, "{reads}_R1.fastq"),
-        reads2=pjoin( ILLUMINA_DIR, "{reads}_R1.fastq"),
+        graph=GFA,
+        reads1=pjoin( ILLUMINA_DIR, "{sample}_R1.fastq"),
+        reads2=pjoin( ILLUMINA_DIR, "{sample}_R1.fastq"),
     output:
-        gaf=pjoin( ILLUMINA_ODIR,"graph_aligner","{reads}.gaf")
+        gaf=pjoin( ILLUMINA_ODIR,"graphaligner","{sample}.gaf")
     threads: 
-        workflow.cores    
+        workflow.cores
+    log:
+        pjoin(ILLUMINA_ODIR, "graphaligner", "{sample}.log.txt")
     conda:
         "../envs/graphaligner.yaml"
     shell:
@@ -21,12 +23,14 @@ rule graph_aligner_illumina:
 
 rule graph_aligner_ont:
     input:
-        graph=GFA,#pjoin( ONT_DIR, "{gfa}.gfa"),
-        reads=pjoin( ONT_DIR, "{reads}.fastq")
+        graph=GFA,
+        reads=pjoin( ONT_DIR, "{sample}.fastq")
     output:
-        gaf=pjoin( ONT_ODIR,"graph_aligner","{reads}.gaf")
+        gaf=pjoin( ONT_ODIR,"graphaligner","{sample}.gaf")
     threads:
         workflow.cores
+    log:
+        pjoin(ONT_ODIR, "graphaligner", "{sample}.log.txt")
     conda:
         "../envs/graphaligner.yaml"
     shell:
