@@ -17,4 +17,4 @@ vg_giraffe:
   m_frag_len: 500
 
 threads:
-  graph_aligner: 16
+  16

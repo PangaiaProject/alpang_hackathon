@@ -1,0 +1,6 @@
+name: panaligner
+channels:
+  - conda-forge
+dependencies:
+  - gcc
+  - zlib
