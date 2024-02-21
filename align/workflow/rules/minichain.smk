@@ -1,10 +1,11 @@
 # --- minichain pipeline
 
+
 rule minichain_install:
     params:
-        odir=pjoin(SOFTWARE_DIR, "minichain")
+        odir=pjoin(SOFTWARE_DIR, "minichain"),
     output:
-        pjoin(SOFTWARE_DIR, "minichain/minichain")
+        pjoin(SOFTWARE_DIR, "minichain/minichain"),
     conda:
         "../envs/minichain.yaml"
     shell:
@@ -15,11 +16,12 @@ rule minichain_install:
         make
         """
 
+
 rule minichain_fix_graph:
     input:
-        graph=GFA
+        graph=GFA,
     output:
-        ograph=temp("graph.fixed.minichain.gfa")
+        ograph=temp("graph.fixed.minichain.gfa"),
     run:
         with open(output.ograph, "w") as out:
             for line in open(input.graph):
@@ -28,9 +30,20 @@ rule minichain_fix_graph:
                     _, name, hapix, seqid, seqstart, seqend, walk = line.split()
                     # seqend = 1
                     # seqstart = 1
-                    print("W", f"{name}#{hapix}_W", 1, seqid, seqstart, seqend, walk, sep="\t", file=out)
+                    print(
+                        "W",
+                        f"{name}#{hapix}_W",
+                        1,
+                        seqid,
+                        seqstart,
+                        seqend,
+                        walk,
+                        sep="\t",
+                        file=out,
+                    )
                 else:
                     print(line, end="", file=out)
+
 
 rule minichain_ont:
     input:
@@ -38,18 +51,19 @@ rule minichain_ont:
         graph="graph.fixed.minichain.gfa",
         fa=pjoin(ONT_DIR, "{sample}.fastq"),
     output:
-        gaf= pjoin(ONT_ODIR, "minichain", "{sample}.gaf")
+        gaf=pjoin(ONT_ODIR, "minichain", "{sample}.gaf"),
     conda:
         "../envs/minichain.yaml"
     benchmark:
         pjoin(ONT_ODIR, "minichain", "{sample}.benchmark.txt")
     log:
-        pjoin(ONT_ODIR, "minichain", "{sample}.log.txt")
+        pjoin(ONT_ODIR, "minichain", "{sample}.log.txt"),
     threads: workflow.cores
     shell:
         """
         {input.tool} -cx lr -t {threads} {input.graph} {input.fa} > {output.gaf} 2> {log}
         """
+
 
 rule minichain_illumina:
     input:
@@ -57,13 +71,13 @@ rule minichain_illumina:
         graph="graph.fixed.minichain.gfa",
         fa=pjoin(ILLUMINA_DIR, "{sample}.catted.fastq"),
     output:
-        gaf= pjoin(ILLUMINA_ODIR, "minichain", "{sample}.gaf")
+        gaf=pjoin(ILLUMINA_ODIR, "minichain", "{sample}.gaf"),
     conda:
         "../envs/minichain.yaml"
     benchmark:
         pjoin(ILLUMINA_ODIR, "minichain", "{sample}.benchmark.txt")
     log:
-        pjoin(ILLUMINA_ODIR, "minichain", "{sample}.log.txt")
+        pjoin(ILLUMINA_ODIR, "minichain", "{sample}.log.txt"),
     threads: workflow.cores
     shell:
         """

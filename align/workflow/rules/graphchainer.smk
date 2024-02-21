@@ -4,11 +4,12 @@
 # - Mattia Sgrò
 # - Brian Riccardi
 
+
 rule graphchainer_install:
     params:
-        odir=pjoin(SOFTWARE_DIR, "GraphChainer")
+        odir=pjoin(SOFTWARE_DIR, "GraphChainer"),
     output:
-        pjoin(SOFTWARE_DIR, "GraphChainer/bin/GraphChainer")
+        pjoin(SOFTWARE_DIR, "GraphChainer/bin/GraphChainer"),
     conda:
         "../envs/graphchainer.yaml"
     shell:
@@ -20,17 +21,18 @@ rule graphchainer_install:
         make bin/GraphChainer
         """
 
+
 rule graphchainer_illumina:
     input:
         tool=pjoin(SOFTWARE_DIR, "GraphChainer/bin/GraphChainer"),
         fa=pjoin(ILLUMINA_DIR, "{sample}.catted.fastq"),
         graph=GFA,
     output:
-        gam= pjoin(ILLUMINA_ODIR, "graphchainer", "{sample}.gam")
+        gam=pjoin(ILLUMINA_ODIR, "graphchainer", "{sample}.gam"),
     benchmark:
         pjoin(ILLUMINA_ODIR, "graphchainer", "{sample}.benchmark.txt")
     log:
-        pjoin(ILLUMINA_ODIR, "graphchainer", "{sample}.log.txt")
+        pjoin(ILLUMINA_ODIR, "graphchainer", "{sample}.log.txt"),
     conda:
         "../envs/graphchainer.yaml"
     params:
@@ -47,17 +49,18 @@ rule graphchainer_illumina:
             -f {input.fa} -g {input.graph} -a {output.gam} &> {log}
         """
 
+
 rule graphchainer_ont:
     input:
         tool=pjoin(SOFTWARE_DIR, "GraphChainer/bin/GraphChainer"),
         fa=pjoin(ONT_DIR, "{sample}.fastq"),
         graph=GFA,
     output:
-        gam= pjoin(ONT_ODIR, "graphchainer", "{sample}.gam")
+        gam=pjoin(ONT_ODIR, "graphchainer", "{sample}.gam"),
     benchmark:
         pjoin(ONT_ODIR, "graphchainer", "{sample}.benchmark.txt")
     log:
-        pjoin(ONT_ODIR, "graphchainer", "{sample}.log.txt")
+        pjoin(ONT_ODIR, "graphchainer", "{sample}.log.txt"),
     conda:
         "../envs/graphchainer.yaml"
     params:
