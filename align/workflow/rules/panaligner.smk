@@ -17,6 +17,7 @@ rule panaligner_install:
         "../envs/panaligner.yaml"
     shell:
         """
+        rm -rf {params.software_dir}/PanAligner
         cd {params.software_dir}
         git clone https://github.com/at-cg/PanAligner
         cd PanAligner && make

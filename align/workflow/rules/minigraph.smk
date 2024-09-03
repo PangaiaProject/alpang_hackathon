@@ -43,3 +43,21 @@ rule minigraph_ont:
         """
         minigraph -cx lr -t {threads} {input.graph} {input.fa} > {output.gaf} 2> {log}
         """
+
+rule minigraph_ownScript:
+    input:
+        graph=GFA,
+        reads = pjoin(OWN_SCRIPT_DIR, "simulated_read_sequences", "{haplotype}.testReads.fa")
+    output:
+        pjoin(OWN_SCRIPT_ODIR, "sequence_to_graph_mappings", "minigraph", "{haplotype}.testReads.gaf")
+    conda:
+        "../envs/minigraph.yaml"
+    benchmark:
+        pjoin(ONT_ODIR, "minigraph", "{haplotype}.benchmark.txt")
+    log:
+        pjoin(ONT_ODIR, "minigraph", "{haplotype}.log.txt")
+    threads: workflow.cores
+    shell:
+        """
+        minigraph -cx sr -t {threads} {input.graph} {input.reads} > {output} 2> {log}
+        """

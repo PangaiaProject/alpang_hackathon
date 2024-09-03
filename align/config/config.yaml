@@ -1,5 +1,11 @@
-gfa: "../data/21:14459766-14464736/graph.wP.unchopped.gfa"
+gfa: "../data/21:14459766-14464736/graph.wP.gfa"
 graph_files: "../data/21:14459766-14464736"
+#Number of haplotypes per sample
+nbHapPerSmpl: 2
+#Reference sequence used to generate VCF and graph
+referenceSequence: "../data/21:14459766-14464736/21.region.fa"
+#Minimum overlap between read's origin and mapping coordinates of a "correct" mapping
+minOverlapRatio: 0.9
 
 software: "../software"
 
@@ -12,6 +18,12 @@ ont:
   samples: ["reads_0001"]
   dir: "../data/21:14459766-14464736/ONT"
   outdir: "../out/ONT"
+
+own:
+  #VCF file used to create the graph
+  vcfFile: "../data/21:14459766-14464736/21.region.vcf.gz"
+  dir: "../data/21:14459766-14464736/OWN"
+  outdir: "../out/OWN"
 
 vg_giraffe:
   m_frag_len: 500

@@ -83,3 +83,21 @@ rule minichain_illumina:
         """
         {input.tool} -cx sr -t {threads} {input.graph} {input.fa} > {output.gaf} 2> {log}
         """
+rule minichain_ownScript:
+    input:
+        tool=pjoin(SOFTWARE_DIR, "minichain/minichain"),
+        graph=GFA,
+        fa=pjoin(OWN_SCRIPT_DIR, "simulated_read_sequences", "{haplotype}.testReads.fa")
+    output:
+        pjoin(OWN_SCRIPT_ODIR, "sequence_to_graph_mappings", "minichain", "{haplotype}.testReads.gaf")
+    conda:
+        "../envs/minichain.yaml"
+    benchmark:
+        pjoin(ONT_ODIR, "minichain", "{haplotype}.benchmark.txt")
+    log:
+        pjoin(ONT_ODIR, "minichain", "{haplotype}.log.txt")
+    threads: workflow.cores
+    shell:
+        """
+        {input.tool} -cx sr -t {threads} {input.graph} {input.fa} > {output} 2> {log}
+        """

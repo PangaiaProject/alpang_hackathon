@@ -1,4 +1,13 @@
 .snakemake
-align/software
+align/.ipynb_checkpoints
+align/config/.ipynb_checkpoints
+align/scripts/__pycache__
+align/scripts/.ipynb_checkpoints
 align/out
-out
+align/workflow/.ipynb_checkpoints
+align/workflow/envs/.ipynb_checkpoints
+align/workflow/rules/.ipynb_checkpoints
+data/21:14459766-14464736/illumina/reads.catted.fastq
+data/21:14459766-14464736/OWN
+out
+software

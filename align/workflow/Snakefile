@@ -1,4 +1,5 @@
 from os.path import join as pjoin
+from os import popen
 
 
 configfile: "config/config.yaml"
@@ -11,10 +12,16 @@ ILLUMINA_DIR = config["illumina"]["dir"]
 ILLUMINA_ODIR = config["illumina"]["outdir"]
 ONT_DIR = config["ont"]["dir"]
 ONT_ODIR = config["ont"]["outdir"]
+OWN_SCRIPT_DIR = config["own"]["dir"]
+OWN_SCRIPT_ODIR = config["own"]["outdir"]
 
+HAPLO_NAMES = [f"{h}#{n}" for n in range(config['nbHapPerSmpl']) for h in popen(f'zgrep "#CHROM" {config["own"]["vcfFile"]}').read()[46:-1].split('\t')]
 
 ##### include rules #####
 include: "rules/bio.smk"
+include: "rules/reference.smk"
+include: "rules/ownSim.smk"
+include: "rules/eval.smk"
 include: "rules/minigraph.smk"
 include: "rules/graphchainer.smk"
 include: "rules/minichain.smk"
@@ -35,6 +42,7 @@ rule all:
             pjoin(ONT_ODIR, "minigraph", "{sample}.gaf"),
             sample=config["ont"]["samples"],
         ),
+        pjoin(OWN_SCRIPT_ODIR, "minigraph", f"evaluationResults_minOv{config['minOverlapRatio']}.txt"),
         expand(
             pjoin(ILLUMINA_ODIR, "graphchainer", "{sample}.gam"),
             sample=config["illumina"]["samples"],
@@ -43,6 +51,13 @@ rule all:
             pjoin(ONT_ODIR, "graphchainer", "{sample}.gam"),
             sample=config["ont"]["samples"],
         ),
+        # expand(
+        #     pjoin(OWN_SCRIPT_ODIR, "sequence_to_graph_mappings", "graphchainer", "{sample}#{h}.testReads.json"),
+        #     sample=["HG00099", "HG00105", "HG00119", "HG00120", "HG00122", "HG00125", "HG00126", "HG00132", "HG00137", "HG00137"] + \
+        #     ["HG00145", "HG00150", "HG00158", "HG00160", "HG00173", "HG00180"],
+        #     h=[0, 1]
+        # ),
+        # pjoin(OWN_SCRIPT_ODIR, "graphchainer", f"evaluationResults_minOv{config['minOverlapRatio']}.txt"),
         expand(
             pjoin(ILLUMINA_ODIR, "minichain", "{sample}.gaf"),
             sample=config["illumina"]["samples"],
@@ -51,6 +66,7 @@ rule all:
             pjoin(ONT_ODIR, "minichain", "{sample}.gaf"),
             sample=config["ont"]["samples"],
         ),
+        pjoin(OWN_SCRIPT_ODIR, "minichain", f"evaluationResults_minOv{config['minOverlapRatio']}.txt"),
         expand(
             pjoin(ILLUMINA_ODIR, "vg_giraffe", "{sample}.gaf"),
             sample=config["illumina"]["samples"],
@@ -75,3 +91,4 @@ rule all:
             pjoin(ONT_ODIR, "graph_aligner", "{sample}.gaf"),
             sample=config["ont"]["samples"],
         ),
+        pjoin(OWN_SCRIPT_ODIR, "graph_aligner", f"evaluationResults_minOv{config['minOverlapRatio']}.txt")

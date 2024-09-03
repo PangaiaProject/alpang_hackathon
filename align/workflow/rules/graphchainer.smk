@@ -76,3 +76,38 @@ rule graphchainer_ont:
             --colinear-gap {params.colinear_gap} \
             -f {input.fa} -g {input.graph} -a {output.gam} &> {log}
         """
+
+rule graphchainer_ownScript:
+    input:
+        tool=pjoin(SOFTWARE_DIR, "GraphChainer/bin/GraphChainer"),
+        fa=pjoin(OWN_SCRIPT_DIR, "simulated_read_sequences", "{sample}.testReads.fa"),
+        graph=GFA
+    output:
+        pjoin(OWN_SCRIPT_ODIR, "sequence_to_graph_mappings", "graphchainer", "{sample}.testReads.gam")
+    benchmark:
+        pjoin(OWN_SCRIPT_ODIR, "graphchainer", "{sample}.benchmark.txt")
+    log:
+        pjoin(OWN_SCRIPT_ODIR, "graphchainer", "{sample}.log.txt"),
+    conda:
+        "../envs/graphchainer.yaml"
+    params:
+        sampling_step=1,
+        colinear_split_len=35,
+        colinear_gap=35,
+    threads: workflow.cores
+    shell:
+        """
+        {input.tool} -t {threads} \
+            --sampling-step {params.sampling_step} \
+            --colinear-split-len {params.colinear_split_len} \
+            --colinear-gap {params.colinear_gap} \
+            -f {input.fa} -g {input.graph} -a {output} &> {log}
+        """
+
+rule gam2json:
+    input:
+        "{gamFile}.gam"
+    output:
+        "{gamFile}.json"
+    shell:
+        "vg view -aj {input} > {output}"
